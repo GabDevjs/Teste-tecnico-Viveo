@@ -4,16 +4,10 @@ import { unsplash } from "@/lib/unsplash";
 
 export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const search = url.searchParams.get("search");
-    const perPage = url.searchParams.get("perPage");
-
-    console.log("search", search);
-    console.log("perPage", perPage);
-
+  
     const response = await unsplash.search.getPhotos({
-      query: search || "",
-      perPage: perPage || '50',
+      query: req.nextUrl.searchParams.get("search") || "",
+      perPage: req.nextUrl.searchParams.get("perPage") || '50',
     });
 
     if (response.errors) {
